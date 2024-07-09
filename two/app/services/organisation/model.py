@@ -12,18 +12,19 @@ class Organisation(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=True, default=None)
     orgId: Mapped[str] = mapped_column(
-        String, primary_key=True, unique=True, default=str(uuid4())
+        String, primary_key=True, unique=True, default_factory=lambda: str(uuid4())
     )
 
     def __repr__(self):
         return f"<Organisation {self.name}>"
+
 
 class OrganisationUser(Base):
     __tablename__ = "organisation_users"
     userId: Mapped[str] = mapped_column(String, nullable=False)
     orgId: Mapped[str] = mapped_column(String, nullable=False)
     orgUserId: Mapped[str] = mapped_column(
-        String, primary_key=True, unique=True, default=str(uuid4())
+        String, primary_key=True, unique=True, default_factory=lambda: str(uuid4())
     )
     role: Mapped[str] = mapped_column(String, nullable=False, default="member")
 
